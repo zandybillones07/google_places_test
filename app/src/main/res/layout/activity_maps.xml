@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:map="http://schemas.android.com/apk/res-auto">
 
+
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -14,6 +15,7 @@
         tools:context=".ui.MapsActivity"
         map:uiZoomControls="true"
         map:uiRotateGestures="true"
+        android:layout_marginTop="50dp"
         map:cameraTilt="30"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -66,7 +68,16 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/report_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/selector_rounded_button_green"
+        android:padding="12dp"
+        android:textColor="@color/white"
+        android:layout_gravity="bottom|center"
+        android:text="View report" />
 
 
 </FrameLayout>

@@ -47,8 +47,6 @@ class MapViewModel(): ViewModel() {
                 }
 
                 allStore.postValue(allStoreContainer)
-
-
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
@@ -57,9 +55,7 @@ class MapViewModel(): ViewModel() {
             override fun onChildRemoved(snapshot: DataSnapshot) {
             }
 
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                Log.d(TAG, "im in @ onChildMoved")
-            }
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
 
             override fun onCancelled(error: DatabaseError) {
             }
@@ -71,7 +67,7 @@ class MapViewModel(): ViewModel() {
     fun getNearByStores(location:GeoLocation) {
         allStoreContainer.clear()
 
-        val geoQuery = geoFire.queryAtLocation(location,0.2)
+        val geoQuery = geoFire.queryAtLocation(location,DEFAULT_RADIUS)
 
         geoQuery.addGeoQueryDataEventListener(object : GeoQueryDataEventListener {
             override fun onDataEntered(dataSnapshot: DataSnapshot, location: GeoLocation) {
@@ -103,6 +99,7 @@ class MapViewModel(): ViewModel() {
 
     companion object {
         private const val TAG = "MINE"
+        private const val DEFAULT_RADIUS = 0.5
     }
 
 }

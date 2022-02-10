@@ -118,6 +118,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 autocomplete_fragment.view?.visibility = View.GONE
             }
         }
+
+        report_bt.setOnClickListener {
+            val intent = Intent(this, ReportsActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 
@@ -125,7 +130,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun setupViewModel() {
         viewModel = ViewModelProvider(this).get(MapViewModel::class.java).apply {
             getNearByStores().observe(this@MapsActivity, {
-                Log.d(TAG, "total nearby stores? ${it.size}")
                 renderStores(it, true)
             })
 
@@ -144,7 +148,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         messageReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
-                Log.d(TAG, "im in message? " + intent.getStringExtra("MSG_FROM_SERVICE"))
                 val message = intent.getStringExtra("MSG_FROM_SERVICE")
                 message?.let {
                     val lat = it.split(",")[0]
@@ -206,16 +209,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 mMap.isMyLocationEnabled = true
                 mMap.uiSettings.isMyLocationButtonEnabled = true
             }
-        } catch (e: SecurityException) {
-            Log.e("Exception: %s", e.message, e)
-        }
+        } catch (e: SecurityException) { e.printStackTrace()}
     }
 
     @SuppressLint("MissingPermission")
     private fun getDeviceLocation() {
         try {
             if (locationPermissionGranted) {
-                Log.d("MINE", "locationPermissionGranted? $locationPermissionGranted")
                 val locationResult = fusedLocationProviderClient.lastLocation
                 locationResult.addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
@@ -258,16 +258,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
-                Log.d("MINE", "Place: ${place.name}, ${place.latLng}")
                 clearMarkers()
                 currentLocation = place.latLng
                 moveAndZoomMap()
                 viewModel.getNearByStores(GeoLocation(place.latLng.latitude, place.latLng.longitude))
             }
 
-            override fun onError(status: Status) {
-                Log.d("MINE", "An error occurred: $status")
-            }
+            override fun onError(status: Status) {}
         })
 
     }
