@@ -45,6 +45,9 @@ class StoreDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
             val storeInfo = intent.getParcelableExtra<StoreInfo>("storeInfo")
             storeInfo?.let { viewModel.getDetails(it) }
         }
+        binding.backBt.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun getDirection(origin:String, destination:String) {
