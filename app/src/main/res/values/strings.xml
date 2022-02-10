@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Food Cebu</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="title_activity_store_details">StoreDetails</string>
+    <string name="lorem">Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.</string>
+</resources>
